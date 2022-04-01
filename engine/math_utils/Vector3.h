@@ -51,10 +51,6 @@ public:
     Vector3 slerp(const Vector3 &other, float t) const;
     Vector3 reflect(const Vector3 &normal) const;
     // Vector3 refract(const Vector3& normal, float eta) const;
-    // Vector3 project(const Vector3& other) const;
-    // Vector3 projectOnPlane(const Vector3& planeNormal) const;
-    // Vector3 projectOnPlane(const Vector3& planeNormal, const Vector3& planePoint) const;
-    // Vector3 projectOnLine(const Vector3& lineNormal
 };
 
 #endif

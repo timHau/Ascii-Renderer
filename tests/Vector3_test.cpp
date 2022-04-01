@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../engine/math/Vector3.h"
+#include "../engine/math_utils/Vector3.h"
 
 TEST(Vector3, Initialization) {
     Vector3 v1(1.0f, 2.0f, 3.0f);
