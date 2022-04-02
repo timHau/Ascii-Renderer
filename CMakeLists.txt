@@ -38,15 +38,5 @@ target_link_libraries(Vector3_test
     gtest_main
 )
 
-add_executable(
-    Ray_test
-    tests/Ray_test.cpp
-)
-target_link_libraries(Ray_test
-    engine
-    gtest_main
-)
-
 include(GoogleTest)
 gtest_discover_tests(Vector3_test)
-gtest_discover_tests(Ray_test)
