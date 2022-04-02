@@ -57,6 +57,10 @@ Vec3 Vec3::operator/(float scalar) const {
     return Vec3(x / scalar, y / scalar, z / scalar);
 }
 
+Vec3 Vec3::operator-(float scalar) const {
+    return Vec3(x - scalar, y - scalar, z - scalar);
+}
+
 Vec3 Vec3::operator-(void) const {
     return Vec3(-x, -y, -z);
 }

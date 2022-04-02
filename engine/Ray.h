@@ -11,7 +11,6 @@
 #include "Vec3.h"
 #include "Scene.h"
 
-
 class Ray
 {
 public:
@@ -23,7 +22,8 @@ public:
         return origin + direction * t;
     }
 
-    auto march() const -> float {
+    auto march() const -> float
+    {
         float dist = 0.0f;
 
         for (int i = 0; i < RAY_MARCH_MAX_STEPS; ++i)
@@ -38,11 +38,36 @@ public:
         return dist;
     }
 
+    auto get_normal(const Vec3 &p) const -> Vec3
+    {
+        float dist = Scene::get_distance(p);
+        Vec3 n = Vec3(
+            dist - Scene::get_distance(p - Vec3(0.01f, 0.0f, 0.0f)),
+            dist - Scene::get_distance(p - Vec3(0.0f, 0.01f, 0.0f)),
+            dist - Scene::get_distance(p - Vec3(0.0f, 0.0f, 0.01f))
+        );
+        return n.normalize();
+    }
+
+    auto get_light(float dist) const -> float
+    {
+        Vec3 p = at(dist);
+        Vec3 light_pos = Vec3(0.0f, 5.0f, 6.0f);
+        Vec3 l = (light_pos - p).normalize();
+        Vec3 normal = get_normal(p);
+
+        float diffuse = std::clamp(l.dot(normal), 0.0f, 1.0f);
+        float shadow_ray = Ray(p+normal*SURFACE_DIST*2.0, l).march();
+        if (shadow_ray < (light_pos - p).length())
+            diffuse *= 0.1f;
+        return diffuse;
+    }
+
     ox::Glyph color() const
     {
-        float dist = march() / 250.0f;
-        std::cout << dist << std::endl;
-        return alphabet.at((1.0 - dist) * (alphabet.size() - 1));
+        float dist = march();
+        auto diffuse = get_light(dist);
+        return alphabet.at(diffuse * (alphabet.size() - 1));
     }
 
 private:

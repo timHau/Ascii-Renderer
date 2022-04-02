@@ -60,6 +60,14 @@ TEST(Vec3, ScalarDivision) {
     EXPECT_EQ(1.5f, v2.getZ());
 }
 
+TEST(Vec3, ScalarSubtraction) {
+    Vec3 v1(1.0f, 2.0f, 3.0f);
+    Vec3 v2 = v1 - 1.0f;
+    EXPECT_EQ(0.0f, v2.getX());
+    EXPECT_EQ(1.0f, v2.getY());
+    EXPECT_EQ(2.0f, v2.getZ());
+}
+
 TEST(Vec3, Inverse) {
     Vec3 v1(1.0f, 2.0f, 3.0f);
     Vec3 v2 = -v1;

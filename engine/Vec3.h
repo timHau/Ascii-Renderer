@@ -26,6 +26,7 @@ public:
     Vec3 operator/(const Vec3 &other) const;
     Vec3 operator*(float scalar) const;
     Vec3 operator/(float scalar) const;
+    Vec3 operator-(float scalar) const;
     Vec3 operator-() const;
 
     Vec3 &operator+=(const Vec3 &other);
@@ -50,7 +51,6 @@ public:
     Vec3 lerp(const Vec3 &other, float t) const;
     Vec3 slerp(const Vec3 &other, float t) const;
     Vec3 reflect(const Vec3 &normal) const;
-    // Vec3 refract(const Vec3& normal, float eta) const;
 };
 
 #endif
