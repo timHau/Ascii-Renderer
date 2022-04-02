@@ -16,8 +16,8 @@ public:
         {
             for (int j = 0; j < area.height; j++)
             {
-                float u = (float(i) - 0.5*float(area.width)) / (float(area.width) - 1.0);
-                float v = (float(j) - 0.5*float(area.height)) / (float(area.height) - 1.0);
+                float u = (float(i) - 0.5 * float(area.width)) / (float(area.width) - 1.0);
+                float v = (float(j) - 0.5 * float(area.height)) / (float(area.height) - 1.0);
                 Vec3 ray_direction = Vec3(u, -v, 1.0f).normalize();
                 Ray ray(ray_origin, ray_direction);
                 auto c = ray.color();

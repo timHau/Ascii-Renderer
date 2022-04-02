@@ -44,8 +44,7 @@ public:
         Vec3 n = Vec3(
             dist - Scene::get_distance(p - Vec3(0.01f, 0.0f, 0.0f)),
             dist - Scene::get_distance(p - Vec3(0.0f, 0.01f, 0.0f)),
-            dist - Scene::get_distance(p - Vec3(0.0f, 0.0f, 0.01f))
-        );
+            dist - Scene::get_distance(p - Vec3(0.0f, 0.0f, 0.01f)));
         return n.normalize();
     }
 
@@ -57,7 +56,7 @@ public:
         Vec3 normal = get_normal(p);
 
         float diffuse = std::clamp(l.dot(normal), 0.0f, 1.0f);
-        float shadow_ray = Ray(p+normal*SURFACE_DIST*2.0, l).march();
+        float shadow_ray = Ray(p + normal * SURFACE_DIST * 2.0, l).march();
         if (shadow_ray < (light_pos - p).length())
             diffuse *= 0.1f;
         return diffuse;
@@ -67,13 +66,30 @@ public:
     {
         float dist = march();
         auto diffuse = get_light(dist);
-        return alphabet.at(diffuse * (alphabet.size() - 1));
+        auto s = alphabet.at(diffuse * (alphabet.size() - 1));
+
+        if (diffuse <= 0.3)
+        {
+            auto fg = s | ox::fg(ox::Color::Dark_gray);
+            return with_bg ? (fg | ox::bg(ox::Color::Black)) : fg;
+        }
+        else if (diffuse <= 0.75)
+        {
+            auto fg = s | ox::fg(ox::Color::Light_gray);
+            return with_bg ? (fg | ox::bg(ox::Color::Dark_gray)) : fg;
+        }
+        else
+        {
+            auto fg = s | ox::fg(ox::Color::White);
+            return with_bg ? (fg | ox::bg(ox::Color::Light_gray)) : fg;
+        }
     }
 
 private:
+    bool with_bg = false;
     Vec3 origin;
     Vec3 direction;
-    std::string alphabet = " .\'`^,:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao#MW&8%B@$";
+    std::string alphabet = ".\'`^,:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao#MW&8%B@$";
 };
 
 #endif
