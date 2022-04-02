@@ -7,7 +7,7 @@
 
 #include <termox/termox.hpp>
 #include <string>
-#include <iostream>
+#include <math.h>
 #include "Vec3.h"
 #include "Scene.h"
 
@@ -48,10 +48,13 @@ public:
         return n.normalize();
     }
 
-    auto get_light(float dist) const -> float
+    auto get_light(float dist, float t) const -> float
     {
         Vec3 p = at(dist);
-        Vec3 light_pos = Vec3(0.0f, 5.0f, 6.0f);
+        Vec3 light_pos = Vec3(
+            0.0f + 2.5f * sin(t / 25.0f),
+            5.0f + 2.5f * cos(t / 25.0f),
+            6.0f);
         Vec3 l = (light_pos - p).normalize();
         Vec3 normal = get_normal(p);
 
@@ -62,10 +65,10 @@ public:
         return diffuse;
     }
 
-    ox::Glyph color() const
+    ox::Glyph color(int t) const
     {
         float dist = march();
-        auto diffuse = get_light(dist);
+        auto diffuse = get_light(dist, t);
         auto s = alphabet.at(diffuse * (alphabet.size() - 1));
 
         if (diffuse <= 0.3)
@@ -89,7 +92,7 @@ private:
     bool with_bg = false;
     Vec3 origin;
     Vec3 direction;
-    std::string alphabet = ".\'`^,:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao#MW&8%B@$";
+    std::string alphabet = " .\'`^,:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao#MW&8%B@$";
 };
 
 #endif
