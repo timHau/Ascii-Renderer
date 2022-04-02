@@ -19,6 +19,10 @@ public:
     float Y() const;
     float Z() const;
 
+    void setX(float x);
+    void setY(float y);
+    void setZ(float z);
+
     Vec3 &operator=(const Vec3 &other);
     Vec3 operator+(const Vec3 &other) const;
     Vec3 operator-(const Vec3 &other) const;

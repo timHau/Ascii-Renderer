@@ -26,6 +26,18 @@ float Vec3::Z() const {
     return z;
 }
 
+void Vec3::setX(float x) {
+    this->x = x;
+}
+
+void Vec3::setY(float y) {
+    this->y = y;
+}
+
+void Vec3::setZ(float z) {
+    this->z = z;
+}
+
 Vec3& Vec3::operator=(const Vec3& other) {
     x = other.x;
     y = other.y;

@@ -22,14 +22,14 @@ public:
         return origin + direction * t;
     }
 
-    auto march() const -> float
+    auto march(float time) const -> float
     {
         float dist = 0.0f;
 
         for (int i = 0; i < RAY_MARCH_MAX_STEPS; ++i)
         {
             Vec3 p = at(dist);
-            float dist_scene = Scene::get_distance(p, t);
+            float dist_scene = Scene::get_distance(p, time);
             dist += dist_scene;
             if (dist > RAY_MARCH_MAX_DISTANCE || dist_scene < SURFACE_DIST)
                 break;
@@ -38,38 +38,40 @@ public:
         return dist;
     }
 
-    auto get_normal(const Vec3 &p) const -> Vec3
+    auto get_normal(const Vec3 &p, float time) const -> Vec3
     {
-        float dist = Scene::get_distance(p, t);
+        float dist = Scene::get_distance(p, time);
         Vec3 n = Vec3(
-            dist - Scene::get_distance(p - Vec3(0.01f, 0.0f, 0.0f), t),
-            dist - Scene::get_distance(p - Vec3(0.0f, 0.01f, 0.0f), t),
-            dist - Scene::get_distance(p - Vec3(0.0f, 0.0f, 0.01f), t));
+            dist - Scene::get_distance(p - Vec3(0.01f, 0.0f, 0.0f), time),
+            dist - Scene::get_distance(p - Vec3(0.0f, 0.01f, 0.0f), time),
+            dist - Scene::get_distance(p - Vec3(0.0f, 0.0f, 0.01f), time));
         return n.normalize();
     }
 
-    auto get_light(float dist) const -> float
+    auto get_light(float dist, float time) const -> float
     {
         Vec3 p = at(dist);
         Vec3 light_pos = Vec3(
-            0.0f + 2.5f * sin(t / 25.0f),
-            5.0f + 2.5f * cos(t / 25.0f),
+            // 0.0f + 2.5f * sin(t / 25.0f),
+            // 5.0f + 2.5f * cos(t / 25.0f),
+            0.0f,
+            5.0f,
             6.0f);
         Vec3 l = (light_pos - p).normalize();
-        Vec3 normal = get_normal(p);
+        Vec3 normal = get_normal(p, time);
 
-        float diffuse = std::clamp(l.dot(normal), 0.0f, 1.0f);
-        float shadow_ray = Ray(p + normal * SURFACE_DIST * 2.0, l).march();
-        if (shadow_ray < (light_pos - p).length())
+        float diffuse = std::clamp(normal.dot(l), 0.0f, 1.0f);
+        auto shadow_ray = Ray(p + normal * SURFACE_DIST * 2.0, l);
+        float sh_dist = shadow_ray.march(time);
+        if (sh_dist < (light_pos - p).length())
             diffuse *= 0.1f;
         return diffuse;
     }
 
     ox::Glyph color(float time)
     {
-        t = time;
-        float dist = march();
-        auto diffuse = get_light(dist);
+        float dist = march(time);
+        auto diffuse = get_light(dist, time);
         auto s = alphabet.at(diffuse * (alphabet.size() - 1));
 
         if (diffuse <= 0.3)
@@ -91,7 +93,6 @@ public:
 
 private:
     bool with_bg = false;
-    float t = 0.0f;
     Vec3 origin;
     Vec3 direction;
     std::string alphabet = " .\'`^,:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao#MW&8%B@$";
