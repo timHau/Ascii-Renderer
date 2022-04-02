@@ -6,7 +6,7 @@
 
 Vec3 rotate_torus(const Vec3 &p, float angle)
 {
-    float theta = angle / 20.0;
+    float theta = angle / 10.0;
     return Vec3(
         cos(theta) * p.X() + sin(theta) * p.Y(),
         cos(theta) * p.Y() - sin(theta) * p.X(),
@@ -39,16 +39,17 @@ public:
 
     static float get_distance(const Vec3 &point, float t)
     {
-        float plane = point.Y() + 1.0f;
+        float plane = point.Y() + 2.0f;
 
         auto sphere_pos = Vec3(0.0f, 1.0f, 6.0f);
         float sphere_dist = sdf_sphere(point, sphere_pos, 1.0f);
 
-        auto torus_radi = Vec3(1.5f, 0.4f, 0.0f);
-        auto shifted_torus_pos = point - Vec3(0.0f, 0.5f, 6.0f);
+        auto torus_radi = Vec3(1.5f, 0.6f, 0.0f);
+        auto shifted_torus_pos = point - Vec3(0.0f, 0.2f, 6.0f);
         float torus_dist = sdf_torus(shifted_torus_pos, torus_radi, t);
 
         float dist = std::min(torus_dist, plane);
+        // float dist = torus_dist;
         return dist;
     }
 

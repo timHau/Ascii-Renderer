@@ -72,6 +72,7 @@ public:
     {
         float dist = march(time);
         auto diffuse = get_light(dist, time);
+        diffuse = powf(diffuse, 0.4545f);
         auto s = alphabet.at(diffuse * (alphabet.size() - 1));
 
         if (diffuse <= 0.3)

@@ -16,7 +16,7 @@ public:
     {
         auto area = ox::Terminal::area();
 
-        auto ray_origin = Vec3(0.0f, 3.0f, -1.0f);
+        auto ray_origin = Vec3(0.0f, 3.0f, -3.0f);
         for (int i = 0; i < area.width; i++)
         {
             for (int j = 0; j < area.height; j++)
