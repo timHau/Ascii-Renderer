@@ -15,9 +15,9 @@ public:
     Vec3(float x, float y, float z);
     ~Vec3();
 
-    float getX() const;
-    float getY() const;
-    float getZ() const;
+    float X() const;
+    float Y() const;
+    float Z() const;
 
     Vec3 &operator=(const Vec3 &other);
     Vec3 operator+(const Vec3 &other) const;

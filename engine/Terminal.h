@@ -16,14 +16,14 @@ public:
     {
         auto area = ox::Terminal::area();
 
-        auto ray_origin = Vec3(0.0f, 1.0f, 0.0f);
+        auto ray_origin = Vec3(0.0f, 3.0f, -1.0f);
         for (int i = 0; i < area.width; i++)
         {
             for (int j = 0; j < area.height; j++)
             {
                 float u = (float(i) - 0.5 * float(area.width)) / (float(area.width) - 1.0);
                 float v = (float(j) - 0.5 * float(area.height)) / (float(area.height) - 1.0);
-                Vec3 ray_direction = Vec3(u, -v, 1.0f).normalize();
+                Vec3 ray_direction = Vec3(u, -v - 0.4f, 1.0f).normalize();
                 Ray ray(ray_origin, ray_direction);
                 auto c = ray.color(time_);
                 p.put(c, ox::Point{i, j});
@@ -56,7 +56,6 @@ protected:
 private:
     ox::FPS fps_;
     float time_ = 0;
-
 };
 
 #endif

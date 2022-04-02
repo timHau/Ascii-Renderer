@@ -29,7 +29,7 @@ public:
         for (int i = 0; i < RAY_MARCH_MAX_STEPS; ++i)
         {
             Vec3 p = at(dist);
-            float dist_scene = Scene::get_distance(p);
+            float dist_scene = Scene::get_distance(p, t);
             dist += dist_scene;
             if (dist > RAY_MARCH_MAX_DISTANCE || dist_scene < SURFACE_DIST)
                 break;
@@ -40,15 +40,15 @@ public:
 
     auto get_normal(const Vec3 &p) const -> Vec3
     {
-        float dist = Scene::get_distance(p);
+        float dist = Scene::get_distance(p, t);
         Vec3 n = Vec3(
-            dist - Scene::get_distance(p - Vec3(0.01f, 0.0f, 0.0f)),
-            dist - Scene::get_distance(p - Vec3(0.0f, 0.01f, 0.0f)),
-            dist - Scene::get_distance(p - Vec3(0.0f, 0.0f, 0.01f)));
+            dist - Scene::get_distance(p - Vec3(0.01f, 0.0f, 0.0f), t),
+            dist - Scene::get_distance(p - Vec3(0.0f, 0.01f, 0.0f), t),
+            dist - Scene::get_distance(p - Vec3(0.0f, 0.0f, 0.01f), t));
         return n.normalize();
     }
 
-    auto get_light(float dist, float t) const -> float
+    auto get_light(float dist) const -> float
     {
         Vec3 p = at(dist);
         Vec3 light_pos = Vec3(
@@ -65,10 +65,11 @@ public:
         return diffuse;
     }
 
-    ox::Glyph color(int t) const
+    ox::Glyph color(float time)
     {
+        t = time;
         float dist = march();
-        auto diffuse = get_light(dist, t);
+        auto diffuse = get_light(dist);
         auto s = alphabet.at(diffuse * (alphabet.size() - 1));
 
         if (diffuse <= 0.3)
@@ -90,6 +91,7 @@ public:
 
 private:
     bool with_bg = false;
+    float t = 0.0f;
     Vec3 origin;
     Vec3 direction;
     std::string alphabet = " .\'`^,:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao#MW&8%B@$";

@@ -14,15 +14,15 @@ Vec3::Vec3(float x, float y, float z) {
 
 Vec3::~Vec3() {}
 
-float Vec3::getX() const {
+float Vec3::X() const {
     return x;
 }
 
-float Vec3::getY() const {
+float Vec3::Y() const {
     return y;
 }
 
-float Vec3::getZ() const {
+float Vec3::Z() const {
     return z;
 }
 
