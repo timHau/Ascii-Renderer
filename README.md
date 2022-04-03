@@ -1,4 +1,4 @@
-# Ray Marching on your Terminal
+# Ray Marching in your Terminal
 
 Learning Ray Marching and having fun
 
