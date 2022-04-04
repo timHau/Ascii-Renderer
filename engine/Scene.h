@@ -41,6 +41,14 @@ public:
         return q.max(0.0).length() + fmin(fmax(q.X(), fmax(q.Y(), q.Z())), 0.0);
     }
 
+    static float sdf_capsule(const Vec3 &p, const Vec3 &a, const Vec3 &b, float r)
+    {
+        auto pa = p - a;
+        auto ba = b - a;
+        float h = std::clamp(pa.dot(ba) / ba.lengthSquared(), 0.0f, 1.0f);
+        return (pa - ba * h).length() - r; 
+    }
+
     static float get_distance(const Vec3 &point, float t)
     {
         float plane_dist = point.Y() + 2.0f;
@@ -54,8 +62,12 @@ public:
 
         float box_dist = sdf_box(shifted_pos, Vec3(0.9f, 0.9f, 1.0f));
 
+        float capsule_dist = sdf_capsule(shifted_pos, Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 1.0f), 0.5f);
+
         float dist = std::min(torus_dist, plane_dist);
         // float dist = std::min(plane_dist, std::min(torus_dist, box_dist));
+        // float dist = std::min(plane_dist, capsule_dist);
+
         return dist;
     }
 };
