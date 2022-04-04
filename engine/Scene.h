@@ -46,12 +46,39 @@ public:
         auto pa = p - a;
         auto ba = b - a;
         float h = std::clamp(pa.dot(ba) / ba.lengthSquared(), 0.0f, 1.0f);
-        return (pa - ba * h).length() - r; 
+        return (pa - ba * h).length() - r;
     }
 
     static float op_round(float sdf_primitive, float r)
     {
         return sdf_primitive - r;
+    }
+
+    static float op_union(float sdf_primitive_1, float sdf_primitive_2)
+    {
+        return std::min(sdf_primitive_1, sdf_primitive_2);
+    }
+
+    static float op_smooth_union(float sdf_primitive_1, float sdf_primitive_2, float r)
+    {
+        float h = std::clamp(0.5f + 0.5f * (sdf_primitive_1 - sdf_primitive_2) / r, 0.0f, 1.0f);
+        return sdf_primitive_1 * (1.0f - h) + sdf_primitive_2 * h - r * h * (1.0f - h);
+    }
+
+    static float op_intersection(float sdf_primitive_1, float sdf_primitive_2)
+    {
+        return std::max(sdf_primitive_1, sdf_primitive_2);
+    }
+
+    static float op_subtraction(float sdf_primitive_1, float sdf_primitive_2)
+    {
+        return std::max(sdf_primitive_1, -sdf_primitive_2);
+    }
+
+    static float op_smooth_subtraction(float sdf_primitive_1, float sdf_primitive_2, float r)
+    {
+        float h = std::clamp(0.5f + 0.5f * (sdf_primitive_1 + sdf_primitive_2) / 0.1f, 0.0f, 1.0f);
+        return -sdf_primitive_1 * (1.0f - h) + sdf_primitive_2 * h + r * h * (1.0f - h);
     }
 
     static float get_distance(const Vec3 &point, float t)
@@ -61,16 +88,18 @@ public:
         auto sphere_pos = Vec3(0.0f, 1.0f, 6.0f);
         float sphere_dist = sdf_sphere(point, sphere_pos, 1.0f);
 
-        auto torus_radi = Vec3(1.5f, 0.6f, 0.0f);
         auto shifted_pos = point - Vec3(0.0f, 0.2f, 6.0f);
-        float torus_dist = sdf_torus(shifted_pos, torus_radi, t);
+
+        auto torus_radi = Vec3(1.5f, 0.6f, 0.0f);
+        auto torus_pos = shifted_pos + Vec3(0.2f, 0.0f, 0.0f);
+        float torus_dist = sdf_torus(torus_pos, torus_radi, t);
 
         float box_dist = sdf_box(shifted_pos, Vec3(0.9f, 0.9f, 1.0f));
 
         float capsule_dist = sdf_capsule(shifted_pos, Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 1.0f), 0.5f);
 
         // float dist = std::min(torus_dist, plane_dist);
-        float dist = std::min(op_round(box_dist, 0.5f), plane_dist);
+        float dist = op_union(plane_dist, op_smooth_union(op_round(box_dist, 0.2f), torus_dist, 0.5f));
         // float dist = std::min(plane_dist, std::min(torus_dist, box_dist));
         // float dist = std::min(plane_dist, capsule_dist);
 
