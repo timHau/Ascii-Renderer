@@ -52,10 +52,10 @@ public:
     {
         Vec3 p = at(dist);
         Vec3 light_pos = Vec3(
-            // 0.0f + 2.5f * sin(t / 25.0f),
-            // 5.0f + 2.5f * cos(t / 25.0f),
-            0.0f,
-            5.0f,
+            0.0f + 2.5f * sin(time / 25.0f),
+            5.0f + 2.5f * cos(time / 25.0f),
+            // 0.0f,
+            // 5.0f,
             6.0f);
         Vec3 l = (light_pos - p).normalize();
         Vec3 normal = get_normal(p, time);

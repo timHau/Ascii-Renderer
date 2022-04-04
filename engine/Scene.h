@@ -49,6 +49,11 @@ public:
         return (pa - ba * h).length() - r; 
     }
 
+    static float op_round(float sdf_primitive, float r)
+    {
+        return sdf_primitive - r;
+    }
+
     static float get_distance(const Vec3 &point, float t)
     {
         float plane_dist = point.Y() + 2.0f;
@@ -64,7 +69,8 @@ public:
 
         float capsule_dist = sdf_capsule(shifted_pos, Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 1.0f), 0.5f);
 
-        float dist = std::min(torus_dist, plane_dist);
+        // float dist = std::min(torus_dist, plane_dist);
+        float dist = std::min(op_round(box_dist, 0.5f), plane_dist);
         // float dist = std::min(plane_dist, std::min(torus_dist, box_dist));
         // float dist = std::min(plane_dist, capsule_dist);
 
