@@ -81,6 +81,11 @@ public:
         return -sdf_primitive_1 * (1.0f - h) + sdf_primitive_2 * h + r * h * (1.0f - h);
     }
 
+    static float op_displace(float sdf_primitive, const Vec3 &p, float freq)
+    {
+        return sdf_primitive + sin(freq * p.X()) * sin(freq * p.Y()) * sin(freq * p.Z());
+    }
+
     static float get_distance(const Vec3 &point, float t)
     {
         float plane_dist = point.Y() + 2.0f;
@@ -99,7 +104,25 @@ public:
         float capsule_dist = sdf_capsule(shifted_pos, Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 1.0f), 0.5f);
 
         // float dist = std::min(torus_dist, plane_dist);
-        float dist = op_union(plane_dist, op_smooth_union(op_round(box_dist, 0.2f), torus_dist, 0.5f));
+
+        float dist = op_union(
+            plane_dist,
+            op_displace(
+                op_smooth_union(
+                    op_round(box_dist, 0.2f),
+                    torus_dist, 
+                    0.5f
+                ),
+                point,
+                2.0f
+            )
+        );
+
+        // float dist = op_union(
+        //     op_smooth_union(torus_dist, box_dist, 0.5f),
+        //     plane_dist
+        // );
+
         // float dist = std::min(plane_dist, std::min(torus_dist, box_dist));
         // float dist = std::min(plane_dist, capsule_dist);
 
