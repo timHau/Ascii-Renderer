@@ -1,1 +1,1 @@
-add_library(src Vec3.cpp)
+add_library(src Vec3.cpp Scene.cpp)
