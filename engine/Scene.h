@@ -10,14 +10,12 @@ Vec3 rotate_torus(const Vec3 &p, float angle)
     return Vec3(
         cos(theta) * p.X() + sin(theta) * p.Y(),
         cos(theta) * p.Y() - sin(theta) * p.X(),
-        p.Z()
-    );
+        p.Z());
 }
 
-class Scene 
+class Scene
 {
 public:
-
     static float sdf_sphere(const Vec3 &p, Vec3 &pos, float radius)
     {
         return (p - pos).length() - radius;
@@ -37,22 +35,29 @@ public:
         return Vec3(x, p.Y(), 0.0).length() - r.Y();
     }
 
+    static float sdf_box(const Vec3 &p, const Vec3 &b)
+    {
+        auto q = p.abs() - b;
+        return q.max(0.0).length() + fmin(fmax(q.X(), fmax(q.Y(), q.Z())), 0.0);
+    }
+
     static float get_distance(const Vec3 &point, float t)
     {
-        float plane = point.Y() + 2.0f;
+        float plane_dist = point.Y() + 2.0f;
 
         auto sphere_pos = Vec3(0.0f, 1.0f, 6.0f);
         float sphere_dist = sdf_sphere(point, sphere_pos, 1.0f);
 
         auto torus_radi = Vec3(1.5f, 0.6f, 0.0f);
-        auto shifted_torus_pos = point - Vec3(0.0f, 0.2f, 6.0f);
-        float torus_dist = sdf_torus(shifted_torus_pos, torus_radi, t);
+        auto shifted_pos = point - Vec3(0.0f, 0.2f, 6.0f);
+        float torus_dist = sdf_torus(shifted_pos, torus_radi, t);
 
-        float dist = std::min(torus_dist, plane);
-        // float dist = torus_dist;
+        float box_dist = sdf_box(shifted_pos, Vec3(0.9f, 0.9f, 1.0f));
+
+        float dist = std::min(torus_dist, plane_dist);
+        // float dist = std::min(plane_dist, std::min(torus_dist, box_dist));
         return dist;
     }
-
 };
 
 #endif

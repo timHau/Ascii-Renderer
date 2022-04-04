@@ -1,14 +1,16 @@
 #include <gtest/gtest.h>
 #include "../engine/Vec3.h"
 
-TEST(Vec3, Initialization) {
+TEST(Vec3, Initialization)
+{
     Vec3 v1(1.0f, 2.0f, 3.0f);
     EXPECT_EQ(1.0, v1.X());
     EXPECT_EQ(2.0f, v1.Y());
     EXPECT_EQ(3.0f, v1.Z());
 }
 
-TEST(Vec3, Addition) {
+TEST(Vec3, Addition)
+{
     Vec3 v1(1.0f, 2.0f, 3.0f);
     Vec3 v2(4.0f, 5.0f, 6.0f);
     Vec3 v3 = v1 + v2;
@@ -17,7 +19,8 @@ TEST(Vec3, Addition) {
     EXPECT_EQ(9.0f, v3.Z());
 }
 
-TEST(Vec3, Subtraction) {
+TEST(Vec3, Subtraction)
+{
     Vec3 v1(1.0f, 2.0f, 3.0f);
     Vec3 v2(4.0f, 5.0f, 6.0f);
     Vec3 v3 = v1 - v2;
@@ -26,7 +29,8 @@ TEST(Vec3, Subtraction) {
     EXPECT_EQ(-3.0f, v3.Z());
 }
 
-TEST(Vec3, Multiplication) {
+TEST(Vec3, Multiplication)
+{
     Vec3 v1(1.0f, 2.0f, 3.0f);
     Vec3 v2(4.0f, 5.0f, 6.0f);
     Vec3 v3 = v1 * v2;
@@ -35,7 +39,8 @@ TEST(Vec3, Multiplication) {
     EXPECT_EQ(18.0f, v3.Z());
 }
 
-TEST(Vec3, Division) {
+TEST(Vec3, Division)
+{
     Vec3 v1(1.0f, 2.0f, 3.0f);
     Vec3 v2(4.0f, 5.0f, 6.0f);
     Vec3 v3 = v1 / v2;
@@ -44,7 +49,8 @@ TEST(Vec3, Division) {
     EXPECT_EQ(0.5f, v3.Z());
 }
 
-TEST(Vec3, ScalarMultiplication) {
+TEST(Vec3, ScalarMultiplication)
+{
     Vec3 v1(1.0f, 2.0f, 3.0f);
     Vec3 v2 = v1 * 2.0f;
     EXPECT_EQ(2.0f, v2.X());
@@ -52,7 +58,8 @@ TEST(Vec3, ScalarMultiplication) {
     EXPECT_EQ(6.0f, v2.Z());
 }
 
-TEST(Vec3, ScalarDivision) {
+TEST(Vec3, ScalarDivision)
+{
     Vec3 v1(1.0f, 2.0f, 3.0f);
     Vec3 v2 = v1 / 2.0f;
     EXPECT_EQ(0.5f, v2.X());
@@ -60,7 +67,8 @@ TEST(Vec3, ScalarDivision) {
     EXPECT_EQ(1.5f, v2.Z());
 }
 
-TEST(Vec3, ScalarSubtraction) {
+TEST(Vec3, ScalarSubtraction)
+{
     Vec3 v1(1.0f, 2.0f, 3.0f);
     Vec3 v2 = v1 - 1.0f;
     EXPECT_EQ(0.0f, v2.X());
@@ -68,7 +76,8 @@ TEST(Vec3, ScalarSubtraction) {
     EXPECT_EQ(2.0f, v2.Z());
 }
 
-TEST(Vec3, Inverse) {
+TEST(Vec3, Inverse)
+{
     Vec3 v1(1.0f, 2.0f, 3.0f);
     Vec3 v2 = -v1;
     EXPECT_EQ(-1.0f, v2.X());
@@ -76,7 +85,8 @@ TEST(Vec3, Inverse) {
     EXPECT_EQ(-3.0f, v2.Z());
 }
 
-TEST(Vec3, AddAssign) {
+TEST(Vec3, AddAssign)
+{
     Vec3 v1(1.0f, 2.0f, 3.0f);
     Vec3 v2(4.0f, 5.0f, 6.0f);
     v1 += v2;
@@ -85,7 +95,8 @@ TEST(Vec3, AddAssign) {
     EXPECT_EQ(9.0f, v1.Z());
 }
 
-TEST(Vec3, SubAssign) {
+TEST(Vec3, SubAssign)
+{
     Vec3 v1(1.0f, 2.0f, 3.0f);
     Vec3 v2(4.0f, 5.0f, 6.0f);
     v1 -= v2;
@@ -94,7 +105,8 @@ TEST(Vec3, SubAssign) {
     EXPECT_EQ(-3.0f, v1.Z());
 }
 
-TEST(Vec3, MulAssign) {
+TEST(Vec3, MulAssign)
+{
     Vec3 v1(1.0f, 2.0f, 3.0f);
     Vec3 v2(4.0f, 5.0f, 6.0f);
     v1 *= v2;
@@ -103,7 +115,8 @@ TEST(Vec3, MulAssign) {
     EXPECT_EQ(18.0f, v1.Z());
 }
 
-TEST(Vec3, DivAssign) {
+TEST(Vec3, DivAssign)
+{
     Vec3 v1(1.0f, 2.0f, 3.0f);
     Vec3 v2(4.0f, 5.0f, 6.0f);
     v1 /= v2;
@@ -112,7 +125,8 @@ TEST(Vec3, DivAssign) {
     EXPECT_EQ(0.5f, v1.Z());
 }
 
-TEST(Vec3, ScalarMulAssign) {
+TEST(Vec3, ScalarMulAssign)
+{
     Vec3 v1(1.0f, 2.0f, 3.0f);
     v1 *= 2.0f;
     EXPECT_EQ(2.0f, v1.X());
@@ -120,7 +134,8 @@ TEST(Vec3, ScalarMulAssign) {
     EXPECT_EQ(6.0f, v1.Z());
 }
 
-TEST(Vec3, ScalarDivAssign) {
+TEST(Vec3, ScalarDivAssign)
+{
     Vec3 v1(1.0f, 2.0f, 3.0f);
     v1 /= 2.0f;
     EXPECT_EQ(0.5f, v1.X());
@@ -128,41 +143,48 @@ TEST(Vec3, ScalarDivAssign) {
     EXPECT_EQ(1.5f, v1.Z());
 }
 
-TEST(Vec3, Equal) {
+TEST(Vec3, Equal)
+{
     Vec3 v1(1.0f, 2.0f, 3.0f);
     Vec3 v2(1.0f, 2.0f, 3.0f);
     EXPECT_TRUE(v1 == v2);
 }
 
-TEST(Vec3, NotEqual) {
+TEST(Vec3, NotEqual)
+{
     Vec3 v1(1.0f, 2.0f, 3.0f);
     Vec3 v2(2.0f, 2.0f, 3.0f);
     EXPECT_TRUE(v1 != v2);
 }
 
-TEST(Vec3, Length) {
+TEST(Vec3, Length)
+{
     Vec3 v1(1.0f, 2.0f, 3.0f);
     EXPECT_EQ(3.7416573867739413f, v1.length());
 }
 
-TEST(Vec3, LengthSquared) {
+TEST(Vec3, LengthSquared)
+{
     Vec3 v1(1.0f, 2.0f, 3.0f);
     EXPECT_EQ(14.0f, v1.lengthSquared());
 }
 
-TEST(Vec3, Distance) {
+TEST(Vec3, Distance)
+{
     Vec3 v1(1.0f, 2.0f, 3.0f);
     Vec3 v2(4.0f, 5.0f, 6.0f);
     EXPECT_EQ(5.196152422706632f, v1.distance(v2));
 }
 
-TEST(Vec3, DistanceSquared) {
+TEST(Vec3, DistanceSquared)
+{
     Vec3 v1(1.0f, 2.0f, 3.0f);
     Vec3 v2(4.0f, 5.0f, 6.0f);
     EXPECT_EQ(27.0f, v1.distanceSquared(v2));
 }
 
-TEST(Vec3, Cross) {
+TEST(Vec3, Cross)
+{
     Vec3 v1(1.0f, 2.0f, 3.0f);
     Vec3 v2(4.0f, 5.0f, 6.0f);
     Vec3 v3 = v1.cross(v2);
@@ -171,13 +193,15 @@ TEST(Vec3, Cross) {
     EXPECT_EQ(-3.0f, v3.Z());
 }
 
-TEST(Vec3, Dot) {
+TEST(Vec3, Dot)
+{
     Vec3 v1(1.0f, 2.0f, 3.0f);
     Vec3 v2(4.0f, 5.0f, 6.0f);
     EXPECT_EQ(32.0f, v1.dot(v2));
 }
 
-TEST(Vec3, Noramize) {
+TEST(Vec3, Noramize)
+{
     Vec3 v1(1.0f, 2.0f, 3.0f);
     v1.normalize();
     EXPECT_FLOAT_EQ(0.2672612419124244f, v1.X());
@@ -185,13 +209,15 @@ TEST(Vec3, Noramize) {
     EXPECT_FLOAT_EQ(0.8017837257372732f, v1.Z());
 }
 
-TEST(Vec3, Angle) {
+TEST(Vec3, Angle)
+{
     Vec3 v1(1.0f, 0.0f, 0.0f);
     Vec3 v2(0.0f, 1.0f, 0.0f);
     EXPECT_FLOAT_EQ(M_PI_2, v1.angle(v2));
 }
 
-TEST(Vec3, Lerp) {
+TEST(Vec3, Lerp)
+{
     Vec3 v1(1.0f, 2.0f, 3.0f);
     Vec3 v2(4.0f, 5.0f, 6.0f);
     Vec3 v3 = v1.lerp(v2, 0.5f);
@@ -200,7 +226,8 @@ TEST(Vec3, Lerp) {
     EXPECT_FLOAT_EQ(4.5f, v3.Z());
 }
 
-TEST(Vec3, Slerp) {
+TEST(Vec3, Slerp)
+{
     Vec3 v1(1.0f, 2.0f, 3.0f);
     Vec3 v2(4.0f, 5.0f, 6.0f);
     Vec3 v3 = v1.slerp(v2, 0.5f);
@@ -209,11 +236,39 @@ TEST(Vec3, Slerp) {
     EXPECT_FLOAT_EQ(4.5288143f, v3.Z());
 }
 
-TEST(Vec3, Reflect) {
+TEST(Vec3, Reflect)
+{
     Vec3 v1(1.0f, 1.0f, 0.0f);
     Vec3 v2(2.0f, 1.0f, 0.0f);
     Vec3 v3 = v1.reflect(v2);
     EXPECT_FLOAT_EQ(-11.0f, v3.X());
     EXPECT_FLOAT_EQ(-5.0f, v3.Y());
     EXPECT_FLOAT_EQ(0.0f, v3.Z());
+}
+
+TEST(Vec3, Abs)
+{
+    Vec3 v1(-1.0f, -2.0f, -3.0f);
+    Vec3 v2 = v1.abs();
+    EXPECT_FLOAT_EQ(1.0f, v2.X());
+    EXPECT_FLOAT_EQ(2.0f, v2.Y());
+    EXPECT_FLOAT_EQ(3.0f, v2.Z());
+}
+
+TEST(Vec3, Max)
+{
+    Vec3 v1(0.5f, 1.0f, 1.5f);
+    Vec3 v3 = v1.max(1.0f);
+    EXPECT_FLOAT_EQ(1.0f, v3.X());
+    EXPECT_FLOAT_EQ(1.0f, v3.Y());
+    EXPECT_FLOAT_EQ(1.5f, v3.Z());
+}
+
+TEST(Vec3, Min)
+{
+    Vec3 v1(0.5f, 1.0f, 1.5f);
+    Vec3 v3 = v1.min(1.0f);
+    EXPECT_FLOAT_EQ(0.5f, v3.X());
+    EXPECT_FLOAT_EQ(1.0f, v3.Y());
+    EXPECT_FLOAT_EQ(1.0f, v3.Z());
 }
