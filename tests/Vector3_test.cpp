@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../engine/Vec3.h"
+#include "../src/Vec3.h"
 
 TEST(Vec3, Initialization)
 {

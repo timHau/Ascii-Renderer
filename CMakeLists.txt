@@ -3,19 +3,19 @@ project(ascii_renderer)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_subdirectory(engine)
-add_subdirectory(external/TermOx)
+add_subdirectory(src)
+add_subdirectory(includes/TermOx)
 
 add_executable(
     ascii_renderer
     main.cpp
 )
 
-target_link_libraries(engine TermOx)
+target_link_libraries(src TermOx)
 
 target_link_libraries(ascii_renderer
     TermOx
-    engine
+    src
 )
 
 include(FetchContent)
@@ -34,7 +34,7 @@ add_executable(
     tests/Vector3_test.cpp
 )
 target_link_libraries(Vector3_test
-    engine
+    src
     gtest_main
 )
 

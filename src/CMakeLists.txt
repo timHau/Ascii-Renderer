@@ -1,0 +1,1 @@
+add_library(src Vec3.cpp)
