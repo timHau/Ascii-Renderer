@@ -4,7 +4,7 @@ project(ascii_renderer)
 set(CMAKE_CXX_STANDARD 17)
 
 add_subdirectory(src)
-add_subdirectory(includes/TermOx)
+add_subdirectory(external/TermOx)
 
 add_executable(
     ascii_renderer
