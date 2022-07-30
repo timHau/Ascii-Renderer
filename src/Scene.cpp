@@ -96,17 +96,17 @@ float Scene::get_distance(const Vec3 &point, float t)
 
     float capsule_dist = sdf_capsule(shifted_pos, Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 1.0f), 0.5f);
 
-    // float dist = std::min(torus_dist, plane_dist);
+    float dist = std::min(torus_dist, plane_dist);
 
-    float dist = op_union(
-        plane_dist,
-        op_displace(
-            op_smooth_union(
-                op_round(box_dist, 0.2f),
-                torus_dist,
-                0.5f),
-            point,
-            2.0f));
+    // float dist = op_union(
+    //     plane_dist,
+    //     op_displace(
+    //         op_smooth_union(
+    //             op_round(box_dist, 0.2f),
+    //             torus_dist,
+    //             0.5f),
+    //         point,
+    //         2.0f));
 
     // float dist = op_union(
     //     op_smooth_union(torus_dist, box_dist, 0.5f),
