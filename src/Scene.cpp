@@ -83,8 +83,8 @@ float Scene::get_distance(const Vec3 &point, float t)
 {
     float plane_dist = point.Y() + 2.0f;
 
-    auto sphere_pos = Vec3(0.0f, 1.0f, 6.0f);
-    float sphere_dist = sdf_sphere(point, sphere_pos, 1.0f);
+    // auto sphere_pos = Vec3(0.0f, 1.0f, 6.0f);
+    // float sphere_dist = sdf_sphere(point, sphere_pos, 1.0f);
 
     auto shifted_pos = point - Vec3(0.0f, 0.2f, 6.0f);
 
@@ -92,9 +92,9 @@ float Scene::get_distance(const Vec3 &point, float t)
     auto torus_pos = shifted_pos + Vec3(0.2f, 0.0f, 0.0f);
     float torus_dist = sdf_torus(torus_pos, torus_radi, t);
 
-    float box_dist = sdf_box(shifted_pos, Vec3(0.9f, 0.9f, 1.0f));
+    // float box_dist = sdf_box(shifted_pos, Vec3(0.9f, 0.9f, 1.0f));
 
-    float capsule_dist = sdf_capsule(shifted_pos, Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 1.0f), 0.5f);
+    // float capsule_dist = sdf_capsule(shifted_pos, Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 1.0f), 0.5f);
 
     float dist = std::min(torus_dist, plane_dist);
 
